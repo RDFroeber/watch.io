@@ -17,9 +17,9 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: watch_io_development
+  database: watch_io_dev
   pool: 5
-  username: evobersi
+  username: RaleighD
   password:
   host: localhost
 
