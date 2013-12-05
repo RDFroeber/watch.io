@@ -22,6 +22,7 @@ var FormView = Backbone.View.extend({
 
   newMovie: function(e) {
     e.preventDefault();
+
     // var title = this.$el.find("input[name='movie']").val();
   }
 });
