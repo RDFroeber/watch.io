@@ -1,3 +1,4 @@
-class MoviesController < ApplicationController::Base
-  
+class MoviesController < ApplicationController
+  def index
+  end
 end
