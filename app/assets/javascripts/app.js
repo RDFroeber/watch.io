@@ -1,19 +1,31 @@
 /*******
+* COLLECTIONS
+*******/
+
+var Movies = Backbone.Collection.extend({
+  model: Movie,
+  urlRoot: '/movies'
+})
+
+/*******
 * MODELS
 *******/
 
-var Movies = Backbone.Model.extend({
+var Movie = Backbone.Model.extend({
+  urlRoot: '/movies',
+
   defaults: {
     seen: false
   }
 });
-
 
 /******
 * VIEWS
 ******/
 
 var FormView = Backbone.View.extend({
+  model: Movie, 
+  url: '/tasks',
   el: "form",
 
   events: {
@@ -22,7 +34,7 @@ var FormView = Backbone.View.extend({
 
   newMovie: function(e) {
     e.preventDefault();
-    // var title = this.$el.find("input[name='movie']").val();
+    var title = this.$el.find("input[name='movie']").val();
   }
 });
 
