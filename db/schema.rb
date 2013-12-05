@@ -25,5 +25,5 @@ ActiveRecord::Schema.define(version: 20131205192334) do
     t.boolean  "seen",        default: false
     t.integer  "rating"
   end
-  
+
 end
