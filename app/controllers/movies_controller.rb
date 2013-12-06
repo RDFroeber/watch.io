@@ -3,9 +3,13 @@ class MoviesController < ApplicationController
   end
 
   def search
-  content_type :json
-  encoded = URI.encode(params[:title])
-  HTTParty.get("http://www.omdbapi.com/?s=#{encoded}").to_json
+    encoded = URI.encode(params[:title])
+    response = JSON(HTTParty.get("http://www.omdbapi.com/?s=#{encoded}"))
+    # binding.pry
+
+    response["Search"].each do |movie|
+      movie["imdbID"]
+    end
   end
 
 end

@@ -1,43 +1,43 @@
-/*******
-* ROUTER
-*******/
+/*********
+* ROUTER *
+*********/
 
 var MovieRouter = Backbone.Router.extend({
   routes: {
-    "movies/search/:title": "movie"
+    "movies/search/:title": "search"
   },
 
-  movie: function(title){
-    new ResultsView({symbol: title});
+  search: function(title){
+    new ResultsView({collection: new SearchedMovies(), title: title});
   }
 });
 
 new MovieRouter();
 
-/*******
-* COLLECTIONS
-*******/
+Backbone.history.start();
 
-var Movies = Backbone.Collection.extend({
+/**************
+* COLLECTIONS *
+**************/
+
+var SearchedMovies = Backbone.Collection.extend({
   model: Movie,
-  urlRoot: '/movies/'
+  url: '/movies/search'
 })
 
-/*******
-* MODELS
-*******/
+/*********
+* MODELS *
+*********/
 
 var Movie = Backbone.Model.extend({
-  urlRoot: '/movies',
-
   defaults: {
     seen: false
   }
 });
 
-/******
-* VIEWS
-******/
+/********
+* VIEWS *
+********/
 
 var FormView = Backbone.View.extend({
   el: "form",
@@ -49,7 +49,7 @@ var FormView = Backbone.View.extend({
   isSubmitted: function(e){
     e.preventDefault();
     var title = this.$el.find("input[name='movie']").val();
-    Backbone.history.navigate("search/" + title, {trigger: true});
+    Backbone.history.navigate("movies/search/" + title, {trigger: true});
   }
 });
 
@@ -58,31 +58,36 @@ var form = new FormView();
 var ResultsView = Backbone.View.extend({
   tagName: "div",
 
-  template: _.template($("#result").html()),
+  // template: _.template($("#result").html()),
 
-  newMovie: function(e) {
-    $.ajax({
-    type: "GET",
-    url: "http://www.omdbapi.com/?s=" + title,
-    dataType: "json",
-    success: this.receiveMovies,
-    context: this
-    }
-  });
-  },
+  initialize: function(opts){
+    this.movieTitle = opts.title
+    this.collection.fetch({data: {title: this.movieTitle}});
+  }
 
-  receiveMovies: function(response){
-    jsonObject = JSON.parse(response);
-    this.movieID = jsonObject.Search.imdbID; 
-    this.movietitle = jsonObject.Search.Title;
+  // newMovie: function(e) {
+  //   $.ajax({
+  //   type: "GET",
+  //   url: "http://www.omdbapi.com/?s=" + title,
+  //   dataType: "json",
+  //   success: this.receiveMovies,
+  //   context: this
+  //   }
+  // });
+  // },
+
+  // receiveMovies: function(response){
+  //   jsonObject = JSON.parse(response);
+  //   this.movieID = jsonObject.Search.imdbID; 
+  //   this.movietitle = jsonObject.Search.Title;
     
-    this.render();
-  },
+  //   this.render();
+  // },
 
-  render: function() {
-    var compiledTemplate = this.template();
-    this.$el.html(compiledTemplate);
-  },
+  // render: function() {
+  //   var compiledTemplate = this.template();
+  //   this.$el.html(compiledTemplate);
+  // },
 
 
-})
+});
