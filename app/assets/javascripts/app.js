@@ -72,8 +72,9 @@ var ResultsView = Backbone.View.extend({
   },
 
   receiveMovies: function(response){
-    jsonObject = JSON.parse(movie);
+    jsonObject = JSON.parse(response);
     this.movietitle = jsonObject.Search.Title;
+    this.moviePoster = jsonObject.Search.
     this.render();
   },
 
