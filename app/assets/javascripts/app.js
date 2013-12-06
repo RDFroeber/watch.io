@@ -4,7 +4,7 @@
 
 var MovieRouter = Backbone.Router.extend({
   routes: {
-    "search/:title": "movie"
+    "movies/search/:title": "movie"
   },
 
   movie: function(title){
@@ -18,10 +18,10 @@ new MovieRouter();
 * COLLECTIONS
 *******/
 
-// var Movies = Backbone.Collection.extend({
-//   model: Movie,
-//   urlRoot: '/movies'
-// })
+var Movies = Backbone.Collection.extend({
+  model: Movie,
+  urlRoot: '/movies/'
+})
 
 /*******
 * MODELS
@@ -73,7 +73,7 @@ var ResultsView = Backbone.View.extend({
 
   receiveMovies: function(response){
     jsonObject = JSON.parse(response);
-    this.movieID = JSON.parse
+    this.movieID = jsonObject.Search.imdbID; 
     this.movietitle = jsonObject.Search.Title;
     
     this.render();
