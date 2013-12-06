@@ -7,4 +7,10 @@
   </label>
 </form>
 
-<div class="movie-results"></div>
+<div class="movie-results">
+  <script type="text/html">
+    <h2><%%= this.title %></h2>
+    <img src="<%%= this.picture_url %>" alt="<%%= this.title %> movie poster" />
+    <p><%%= this.plot %></p>
+  </script>
+</div>
